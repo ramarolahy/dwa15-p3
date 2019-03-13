@@ -1,29 +1,26 @@
-@extends('layouts.base')
+@extends('layouts._base')
 
-@section('title', 'Quote')
+@section('title', 'Create Quote')
 
 @section('content')
-    <!-- MATERIAL DESIGN LITE  Wrapper -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <!--Main app Bootstrap container -->
-    <main class="container pt-5">
-        <!--Title and intro-->
-        <div class="row mt-4">
+
+    <div class="row mt-4">
             <div class="col">
-                <h3 class="text-center">Make Pretty Quotes!</h3>
+                <h3 class="text-center">Inspire the world!</h3>
                 <div class="card text-center border-0 bg-light py-3">
                     <p class="text-center mdl-card__title-text">
-                        Have fun creating some awesome quote cards!
+                        Inspire the world by creating quote posters!
                     </p>
                 </div>
             </div>
         </div>
-        <!-- App -->
-        <div class="card py-5 mt-2 border-0 bg-light">
+    <!-- App -->
+    <div class="card py-5 mt-2 border-0 bg-light">
             <div class="row">
                 <!-- Form wrapper-->
                 <div class="col-5 pl-5">
-                    <form action="QuoteMaker.php" method="get">
+                    <form method="POST" action="/quotes/create">
+                        {{ csrf_field () }}
                         <div class="card border-0 px-4 pb-2">
 
                             <!-- Background selection -->
@@ -36,9 +33,8 @@
                                         <input type="radio" id="option-1"
                                                class="mdl-radio__button"
                                                name="selectedImg"
-                                               value="road.jpeg" <?php if ( $selectedImg === "road.jpeg" ) echo
-                                        "checked"
-                                            ?>>
+                                               value="road.jpeg"
+                                               @if ( $selectedImg === "road.jpeg" ) checked @endif >
                                         <img src="{{ asset('/images/road.jpeg') }} " alt="road">
                                     </label>
                                 </div>
@@ -48,9 +44,8 @@
                                                class="mdl-radio__button"
                                                name="selectedImg"
                                                value="fall.jpg"
-                                        <?php if ( $selectedImg === "fall.jpg" ) echo "checked" ?>>
-                                        <img src="{{ asset('/images/fall.jpg') }}"
-                                             alt="fall">
+                                               @if ( $selectedImg === "fall.jpg" ) checked @endif >
+                                        <img src="{{ asset('/images/fall.jpg') }}" alt="fall">
                                     </label>
                                 </div>
                                 <div class="col-3">
@@ -59,9 +54,8 @@
                                                class="mdl-radio__button"
                                                name="selectedImg"
                                                value="butterflies.jpeg"
-                                        <?php if ( $selectedImg === "butterflies.jpeg" ) echo "checked" ?>>
-                                        <img src="{{ asset('/images/butterflies.jpeg') }}"
-                                             alt="butterflies">
+                                               @if ( $selectedImg === "butterflies.jpeg" ) checked @endif >
+                                        <img src="{{ asset('/images/butterflies.jpeg') }}" alt="butterflies">
                                     </label>
                                 </div>
                                 <div class="col-3">
@@ -70,9 +64,8 @@
                                                class="mdl-radio__button"
                                                name="selectedImg"
                                                value="leaves.jpeg"
-                                        <?php if ( $selectedImg === "leaves.jpeg" ) echo "checked" ?>>
-                                        <img src="{{ asset('/images/leaves.jpeg') }}"
-                                             alt="leaves">
+                                               @if ( $selectedImg === "leaves.jpeg" ) checked @endif >
+                                        <img src="{{ asset('/images/leaves.jpeg') }}" alt="leaves">
                                     </label>
                                 </div>
                             </div>
@@ -86,15 +79,16 @@
                                     <!--If filled, leave text on input area
                                     in case
                                         the user needs to make correction-->
-                                    <textarea class="mdl-textfield__input" rows="2" id="quote" name="quote"><?php echo $quote ? $quote : null ?>
+                                    <textarea class="mdl-textfield__input" rows="2" id="quote" name="quote">
+                                        {{ $quote ? $quote : null }}
                                     </textarea>
                                 </div>
                                 <!--If left empty, print error message-->
-                                <?php if ( $errors[ "quote" ] ) : ?>
-                                <div class="alert alert-danger mb-2">
-                                        <?= $errors[ "quote" ] ?>
+                                @if ( $errors[ "quote" ] )
+                                    <div class="alert alert-danger mb-2">
+                                        {{ $errors[ "quote" ] }}
                                     </div>
-                                <?php endif; ?>
+                                @endif
                                 <div
                                     class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <!--If filled, leave text on input area
@@ -103,16 +97,16 @@
                                     <input class="mdl-textfield__input"
                                            type="text" id="bottomText"
                                            name="author"
-                                           value="<?php echo $author ? $author : null ?>">
+                                           value="{{ $author ? $author : null }}">
                                     <label class="mdl-textfield__label"
                                            for="bottomText">Author...</label>
                                 </div>
                                 <!--If left empty, print error message-->
-                                <?php if ( $errors[ "author" ] ) : ?>
-                                <div class="alert alert-danger mb-2">
-                                        <?= $errors[ "author" ] ?>
+                                @if ( $errors[ "author" ] )
+                                    <div class="alert alert-danger mb-2">
+                                        {{ $errors[ "author" ] }}
                                     </div>
-                                <?php endif; ?>
+                                @endif
                             </div>
                             <!-- END Quote and Author input -->
 
@@ -131,10 +125,9 @@
                                                        id="addBackground"
                                                        class="mdl-checkbox__input"
                                                        name="addBackground"
-                                                       value="true"<?php if (
-                                                    isset(
-                                                        $addBackground ) and
-                                                    $addBackground and !$hasErrors ) echo checked ?> >
+                                                       value="true"
+                                                       @if ( isset( $addBackground ) and $addBackground and !$hasErrors ) checked @endif
+                                                >
                                                 <span
                                                     class="mdl-checkbox__label mdl-card__title-text">Add Text Background</span>
                                             </label>
@@ -159,30 +152,37 @@
                 <!-- Quote poster -->
                 <div class="col-7 pr-5">
                     <!--  Put canvas here -->
-                    <div id="quoteImg" class="wrap-quote mdl-card
-                    mdl-shadow--2dp" style="width: auto;"></div>
-                    <!-- Poster div -->
+                <div id="quoteImg" class="wrap-quote mdl-card
+                mdl-shadow--2dp" style="width: auto;"></div>
+                <!-- Poster div -->
                     <div class="wrap-quote mdl-card mdl-shadow--2dp"
-                         style="<?php echo ( $imgBg ) ? $imgBg : "background-color:#313f48;" ?>" id="myQuote">
+                         style="
+                         @if($imgBg)
+                             background-image:url({{ asset ('/images/'. $imgBg) }});
+                         @else
+                             background-color:#313f48;
+                         @endif
+                             "
+                         id="myQuote">
                         <!--On first load OR if there are errors, print default
                         quote
                         .-->
-                        <?php if ( $hasErrors or !$quote ) : ?>
-                        <div class="default_quote">
+                        @if ( $hasErrors or !$quote )
+                            <div class="default_quote">
                                 <span class="text__top">"A nice quote for a nice day!"</span><br>
                                 <span class="text__top">~~~</span>
                             </div>
-                    <?php endif ?>
+                    @endif
                     <!--Add text background if no errors-->
-                        <div class="<?php if ( !$hasErrors ) echo $textBg ?>
-                            quote-text text-center py-5">
+                        <div class="@if ( !$hasErrors ) {{ $textBg }} @endif quote-text text-center py-5">
                             <!--If there are no errors, print quote and
                             author-->
                             <span
-                                class="text__top"><?php echo !$hasErrors ? $quote : null ?></span>
+                                class="text__top">{{ !$hasErrors ? $quote : null }}</span>
                             <br><br>
                             <span
-                                class="text__top"><?php if ( !$hasErrors and $author != "" ) echo "~~ " . $author . " ~~" ?></span>
+                                class="text__top">@if ( !$hasErrors and $author != "" ) ~~ {{ $author }} ~~ @endif
+                            </span>
                         </div>
                     </div>
                     <!-- END Poster div -->
@@ -196,10 +196,8 @@
                 <!-- END Quote poster-->
             </div>
         </div>
-        <!-- END App -->
-    </main>
-</div>
-    <!-- END MDL Wrapper -->
+    <!-- END App -->
+
 @stop
 
 @section('script')
