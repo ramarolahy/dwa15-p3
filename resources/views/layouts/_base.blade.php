@@ -9,7 +9,11 @@
         @include('includes._navbar')
     </header>
 
-    @yield('content')
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+         <main class="container pt-5">
+               @yield('content')
+         </main>
+    </div>
 
     <script>
         @yield ('script')

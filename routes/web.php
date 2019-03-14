@@ -1,5 +1,8 @@
 <?php
 
-    Route::get ( '/', 'PageController@getIndex')->name('pages.index');
+    Route::get ( '/', 'HomeController@Index')->name('pages.index');
 
-    Route::get ( '/quote','PageController@getQuote')->name('pages.quote');
+    Route::get ( '/quotes','QuoteController@home')->name('quotes.home');
+    Route::get ( '/quotes/create','QuoteController@create')->name('quotes.create');
+    Route::post ( '/quotes/create','QuoteController@new')->name('quotes.create');
+

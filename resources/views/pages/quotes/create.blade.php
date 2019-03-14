@@ -19,13 +19,21 @@
             <div class="row">
                 <!-- Form wrapper-->
                 <div class="col-5 pl-5">
-                    <form method="POST" action="/quotes/create">
+                    <form method="POST" action="/quotes/create" enctype="multipart/form-data">
                         {{ csrf_field () }}
                         <div class="card border-0 px-4 pb-2">
 
                             <!-- Background selection -->
                             <div class="card-body">
                                 <h5 class="mdl-card__title-text">Choose Background</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                                     <input class="mdl-textfield__input" placeholder="Upload image" type="text" id="uploadFile" readonly/>
+                                     <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+                                         <i class="material-icons">add_photo_alternate</i><input type="file" id="uploadBtn">
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body row wrap-card-body__radio">
                                 <div class="col-3">
@@ -34,6 +42,7 @@
                                                class="mdl-radio__button"
                                                name="selectedImg"
                                                value="road.jpeg"
+                                               onclick="document.getElementById('myQuote').style.backgroundImage = url({{ asset('/images/road.jpeg') }})"
                                                @if ( $selectedImg === "road.jpeg" ) checked @endif >
                                         <img src="{{ asset('/images/road.jpeg') }} " alt="road">
                                     </label>
@@ -79,9 +88,7 @@
                                     <!--If filled, leave text on input area
                                     in case
                                         the user needs to make correction-->
-                                    <textarea class="mdl-textfield__input" rows="2" id="quote" name="quote">
-                                        {{ $quote ? $quote : null }}
-                                    </textarea>
+                                    <textarea class="mdl-textfield__input" rows="1" id="quote" name="quote" required>{{ $quote ? $quote : null }}</textarea>
                                 </div>
                                 <!--If left empty, print error message-->
                                 @if ( $errors[ "quote" ] )
@@ -95,11 +102,12 @@
                                          in case
                                         the user needs to make correction-->
                                     <input class="mdl-textfield__input"
-                                           type="text" id="bottomText"
+                                           type="text" id="author"
                                            name="author"
-                                           value="{{ $author ? $author : null }}">
+                                           value="{{ $author ? $author : null }}"
+                                           required >
                                     <label class="mdl-textfield__label"
-                                           for="bottomText">Author...</label>
+                                           for="author">Author...</label>
                                 </div>
                                 <!--If left empty, print error message-->
                                 @if ( $errors[ "author" ] )
@@ -139,8 +147,16 @@
 
                             <!-- Submit button -->
                             <div class="card-body">
+                                <button class=" float-left mdl-button mdl-js-button mdl-button--raised
+                                mdl-js-ripple-effect" onclick="
+                                        document.getElementById('quote').value=null;
+                                        document.getElementById('author').value=null;
+                                        document.getElementById('myBackground').value=null;
+                                        return false;">
+                                    Clear
+                                </button>
                                 <button class=" float-right mdl-button mdl-js-button mdl-button--raised
-                                mdl-js-ripple-effect mdl-button--colored" type="submit">
+                                mdl-js-ripple-effect mdl-button--accent text-white" type="submit">
                                     Show me!
                                 </button>
                             </div>
@@ -158,7 +174,7 @@
                     <div class="wrap-quote mdl-card mdl-shadow--2dp"
                          style="
                          @if($imgBg)
-                             background-image:url({{ asset ('/images/'. $imgBg) }});
+                             background-image:url({{ $imgBg }});
                          @else
                              background-color:#313f48;
                          @endif
@@ -174,7 +190,7 @@
                             </div>
                     @endif
                     <!--Add text background if no errors-->
-                        <div class="@if ( !$hasErrors ) {{ $textBg }} @endif quote-text text-center py-5">
+                        <div class="@if ( isset( $addBackground ) and $addBackground and !$hasErrors ) {{ $textBg }} @endif quote-text text-center py-5">
                             <!--If there are no errors, print quote and
                             author-->
                             <span
@@ -202,7 +218,9 @@
 
 @section('script')
     html2canvas(document.getElementById("myQuote")).then(canvas => {
-    document.getElementById("quoteImg").appendChild
-    (canvas)
+    document.getElementById("quoteImg").appendChild(canvas)
     });
+    document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.files[0].name;
+    };
 @stop

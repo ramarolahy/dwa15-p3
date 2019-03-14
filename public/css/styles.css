@@ -82,3 +82,24 @@ a {
 .alert-info {
     width: 608px;
 }
+div.mdl-button.mdl-button--primary.mdl-button--icon.mdl-button--file{
+    right: 0px;
+}
+.mdl-button--file input {
+    cursor: pointer;
+    height: 100%;
+    right: 0;
+    opacity: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+}
+.mdl-textfield--file.mdl-textfield__input {
+    box-sizing: border-box;
+    width: 100%;
+}
+.mdl-textfield--file.mdl-button--file {
+    position: absolute;
+    right: 0;
+}
