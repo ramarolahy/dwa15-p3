@@ -15,4 +15,4 @@
 <!--    CUSTOM STYLESHEET   -->
 <link rel="stylesheet" href="{{asset('/css/styles.css')}}">
 <!--    HTML2CANVAS TO SAVE IMAGE   -->
-<script type="text/javascript" src="{{asset('/js/html2canvas.min.js')}}"></script>
+<script src="{{asset('/js/html2canvas.min.js')}}"></script>
