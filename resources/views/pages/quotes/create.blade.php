@@ -19,7 +19,7 @@
             <div class="row">
                 <!-- Form wrapper-->
                 <div class="col-5 pl-5">
-                    <form method="POST" action="/quotes/create" enctype="multipart/form-data">
+                    <form method="POST" action="/" enctype="multipart/form-data">
                         {{ csrf_field () }}
                         <div class="card border-0 px-4 pb-2">
                             <!-- Background selection -->
