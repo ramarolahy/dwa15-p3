@@ -20,9 +20,7 @@
                 'selectedImg'   => null,
                 'quote'         => null,
                 'author'        => null,
-                'addBackground' => null,
-                'errors'        => null,
-                'hasErrors'     => null
+                'addBackground' => null
             ];
 
             return view ( 'pages.quotes.create', $state );
@@ -71,8 +69,6 @@
                 'quote'         => $quote,
                 'author'        => $author,
                 'addBackground' => $addBackground,
-                'errors'        => null,
-                'hasErrors'     => null
             ];
 
             return view ( 'pages.quotes.create', $state );

@@ -28,7 +28,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
-                                     <input class="mdl-textfield__input" placeholder="Upload image" type="text" id="uploadFile" readonly/>
+                                     <input class="mdl-textfield__input" placeholder="Upload image (optional)" type="text" id="uploadFile" readonly/>
                                      <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
                                          <i class="material-icons">add_photo_alternate</i><input type="file" id="uploadBtn">
                                     </div>
@@ -87,14 +87,13 @@
                                     <!--If filled, leave text on input area
                                     in case
                                         the user needs to make correction-->
-                                    <textarea class="mdl-textfield__input" rows="1" id="quote" name="quote" required>{{ $quote ? $quote : null }}</textarea>
+                                    <textarea class="mdl-textfield__input" rows="1" id="quote" name="quote" placeholder="*Enter your quote...">
+                                        {{ $quote ? $quote : null }}
+                                    </textarea>
+                                    <!--If left empty, print error message-->
+                                    @include('includes.error_field', ['fieldname' => 'quote'])
                                 </div>
-                                <!--If left empty, print error message-->
-                                @if ( $errors[ "quote" ] )
-                                    <div class="alert alert-danger mb-2">
-                                        {{ $errors[ "quote" ] }}
-                                    </div>
-                                @endif
+
                                 <div
                                     class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <!--If filled, leave text on input area
@@ -104,9 +103,11 @@
                                            type="text" id="author"
                                            name="author"
                                            value="{{ $author ? $author : null }}"
-                                           required >
+                                           required>
                                     <label class="mdl-textfield__label"
-                                           for="author">Author...</label>
+                                           for="author">*Author...</label>
+                                    <!--If left empty, print error message-->
+                                    @include('includes.error_field', ['fieldname' => 'author'])
                                 </div>
                                 <!--If left empty, print error message-->
                                 @if ( $errors[ "author" ] )
@@ -169,7 +170,7 @@
                     <!--  Put canvas here -->
                 <div id="quoteImg" class="wrap-quote mdl-card
                 mdl-shadow--2dp" style="width: auto;"></div>
-                <!-- Poster div -->
+                    <!-- Poster div -->
                     <div class="wrap-quote mdl-card mdl-shadow--2dp"
                          style="
                          @if($imgBg)
