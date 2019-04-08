@@ -3,9 +3,16 @@
 + Production URL: <http://p3.ramarolahy.me>
 
 ## Outside resources
-+ https://scotch.io/tutorials/understanding-and-working-with-files-in-laravel
-+ https://html2canvas.hertzen.com/
-+ https://www.pexels.com/
++ W3SCHOOLS: https://www.w3schools.com/php7/default.asp
+    For php references
++ Bootstrap: https://getbootstrap.com/
+    For grid layout and components.
++ Material Design Lite: https://getmdl.io/
+    For components.
++ html2canvas: https://html2canvas.hertzen.com/
+    To change div into a canvas.
++ pexels: https://www.pexels.com/
+    This is where I got the background images
 
 ## 3 Unique inputs
 + radio inputs for background images
