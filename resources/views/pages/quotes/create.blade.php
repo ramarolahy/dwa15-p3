@@ -22,7 +22,6 @@
                     <form method="POST" action="/quotes/create" enctype="multipart/form-data">
                         {{ csrf_field () }}
                         <div class="card border-0 px-4 pb-2">
-
                             <!-- Background selection -->
                             <div class="card-body">
                                 <h5 class="mdl-card__title-text">Choose Background</h5>
