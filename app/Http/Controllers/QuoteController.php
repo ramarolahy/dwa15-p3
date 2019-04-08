@@ -41,16 +41,6 @@
 
             if ( $selectedImg ) {
                 $imgBg = asset ('/images/'. $selectedImg);
-
-            }
-            elseif ( $request->hasFile ( 'myBackground' ) ) {
-                $imgBg = $request->file ( 'myBackground' );
-                // generate a new filename. getClientOriginalExtension() for the file extension
-                $filename = 'my-image-' . time () . '.' .
-                    $imgBg->getClientOriginalExtension ();
-                //                // save to storage/app/photos as the new $filename
-                $path = $imgBg->storeAs('public/images', $filename);
-                $imgBg = asset ('storage/public/images/'. $filename);
             }
             else {
                 $selectedImg = $bgImages[ array_rand ( $bgImages ) ];

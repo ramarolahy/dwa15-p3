@@ -4,15 +4,21 @@
 
 ## Outside resources
 + https://scotch.io/tutorials/understanding-and-working-with-files-in-laravel
++ https://html2canvas.hertzen.com/
++ https://www.pexels.com/
 
 ## 3 Unique inputs
-*You don't have to list all inputs, just 3 unique ones. The following is an example of what I'd put if my project was the xkcd Password Generator: (1) Text input to indicate number of words in password, (2) Checkbox to indicate whether to include a number (3) Dropdown to indicate what symbol to include*
++ radio inputs for background images
++ textarea input for quote
++ text input author
++ checkbox for Add text background
 
 ## Packages
-*List the name of any packages you add to your project that do not come with Laravel by default; this should include, but is not limited to, barryvdh/laravel-debugbar*
++ barryvdh/laravel-debugbar
+
 
 ## Code style divergences
-*list any divergences from PSR-1/PSR-2 and course guidelines on code style*
++ I prefer to have my opening curly brackets on the same line because I got used to it in JS.
 
 ## Notes for instructor
-*Any notes for me to refer to while grading; if none, omit this section*
+N/A

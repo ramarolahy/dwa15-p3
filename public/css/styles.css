@@ -103,3 +103,13 @@ div.mdl-button.mdl-button--primary.mdl-button--icon.mdl-button--file{
     position: absolute;
     right: 0;
 }
+
+
+div.alert.alert-danger {
+    padding: 0;
+    color: crimson;
+    border: none;
+    background: none;
+    position: relative;
+    top: -15px;
+}

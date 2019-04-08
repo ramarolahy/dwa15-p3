@@ -26,14 +26,15 @@
                             <div class="card-body">
                                 <h5 class="mdl-card__title-text">Choose Background</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
-                                     <input class="mdl-textfield__input" placeholder="Upload image (optional)" type="text" id="uploadFile" readonly/>
-                                     <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
-                                         <i class="material-icons">add_photo_alternate</i><input type="file" id="uploadBtn">
-                                    </div>
-                                </div>
-                            </div>
+{{--                            I will keep trying to figure this one out for the final project--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">--}}
+{{--                                     <input class="mdl-textfield__input" placeholder="Upload image (optional)" type="text" id="uploadFile" readonly/>--}}
+{{--                                     <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">--}}
+{{--                                         <i class="material-icons">add_photo_alternate</i><input type="file" id="uploadBtn">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="card-body row wrap-card-body__radio">
                                 <div class="col-3">
                                     <label class="" for="option-1">
@@ -81,19 +82,19 @@
 
                             <!-- Quote and Author input -->
                             <div class="card-body">
-                                <h5 class="mdl-card__title-text">Add a quote</h5>
+                                <h5 class="mdl-card__title-text">Add your quote</h5>
 
                                 <div class="mdl-textfield mdl-js-textfield">
                                     <!--If filled, leave text on input area
                                     in case
                                         the user needs to make correction-->
-                                    <textarea class="mdl-textfield__input" rows="1" id="quote" name="quote" placeholder="*Enter your quote...">
-                                        {{ $quote ? $quote : null }}
-                                    </textarea>
-                                    <!--If left empty, print error message-->
-                                    @include('includes.error_field', ['fieldname' => 'quote'])
-                                </div>
+                                    <textarea class="mdl-textfield__input" rows="1" id="quote" name="quote">{{ $quote ? $quote : null }}</textarea>
+                                    <label class="mdl-textfield__label"
+                                           for="quote">*Enter nice quote here...</label>
 
+                                </div>
+                                <!--If left empty, print error message-->
+                                @include('includes._error_field', ['fieldName' => 'quote'])
                                 <div
                                     class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <!--If filled, leave text on input area
@@ -103,18 +104,14 @@
                                            type="text" id="author"
                                            name="author"
                                            value="{{ $author ? $author : null }}"
-                                           required>
+                                           >
                                     <label class="mdl-textfield__label"
-                                           for="author">*Author...</label>
-                                    <!--If left empty, print error message-->
-                                    @include('includes.error_field', ['fieldname' => 'author'])
+                                           for="author">*Who said it?...</label>
+
                                 </div>
                                 <!--If left empty, print error message-->
-                                @if ( $errors[ "author" ] )
-                                    <div class="alert alert-danger mb-2">
-                                        {{ $errors[ "author" ] }}
-                                    </div>
-                                @endif
+                            @include('includes._error_field', ['fieldName' => 'author'])
+                                <!--If left empty, print error message-->
                             </div>
                             <!-- END Quote and Author input -->
 
@@ -134,7 +131,7 @@
                                                        class="mdl-checkbox__input"
                                                        name="addBackground"
                                                        value="true"
-                                                       @if ( isset( $addBackground ) and $addBackground and !$hasErrors ) checked @endif
+                                                       @if ( isset( $addBackground ) and $addBackground and !$errors ) checked @endif
                                                 >
                                                 <span
                                                     class="mdl-checkbox__label mdl-card__title-text">Add Text Background</span>
@@ -152,7 +149,7 @@
                                         document.getElementById('quote').value=null;
                                         document.getElementById('author').value=null;
                                         document.getElementById('myBackground').value=null;
-                                        return false;">
+                                        return false;" type="button">
                                     Clear
                                 </button>
                                 <button class=" float-right mdl-button mdl-js-button mdl-button--raised
@@ -160,6 +157,7 @@
                                     Show me!
                                 </button>
                             </div>
+                            <div class="alert alert-danger mb-2 mt-4">* Required fields</div>
                         </div>
                     </form>
                 </div>
@@ -183,21 +181,21 @@
                         <!--On first load OR if there are errors, print default
                         quote
                         .-->
-                        @if ( $hasErrors or !$quote )
+                        @if ( count($errors) > 0 or !$quote )
                             <div class="default_quote">
                                 <span class="text__top">"A nice quote for a nice day!"</span><br>
                                 <span class="text__top">~~~</span>
                             </div>
-                    @endif
+                        @endif
                     <!--Add text background if no errors-->
-                        <div class="@if ( isset( $addBackground ) and $addBackground and !$hasErrors ) {{ $textBg }} @endif quote-text text-center py-5">
+                        <div class="@if ( isset( $addBackground ) and $addBackground and count($errors) == 0 ) {{ $textBg }} @endif quote-text text-center py-5">
                             <!--If there are no errors, print quote and
                             author-->
                             <span
-                                class="text__top">{{ !$hasErrors ? $quote : null }}</span>
+                                class="text__top">{{ count($errors) == 0 ? $quote : null }}</span>
                             <br><br>
                             <span
-                                class="text__top">@if ( !$hasErrors and $author != "" ) ~~ {{ $author }} ~~ @endif
+                                class="text__top">@if ( count($errors) == 0 and $author != "" ) ~~ {{ $author }} ~~ @endif
                             </span>
                         </div>
                     </div>
