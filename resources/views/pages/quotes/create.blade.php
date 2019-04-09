@@ -6,7 +6,6 @@
 
     <div class="row mt-4">
             <div class="col">
-                <h3 class="text-center">Inspire the world!</h3>
                 <div class="card text-center border-0 bg-light py-3">
                     <p class="text-center mdl-card__title-text">
                         Inspire the world by creating quote posters!
